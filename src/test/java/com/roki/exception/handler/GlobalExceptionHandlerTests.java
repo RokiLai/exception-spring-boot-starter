@@ -46,8 +46,6 @@ class GlobalExceptionHandlerTests {
     void setUp() {
         ErrorCodeScopes.configure("10", "01", Map.of(
                 "common", "01",
-                "validation", "02",
-                "system", "99",
                 "order", "11"));
     }
 
@@ -56,8 +54,18 @@ class GlobalExceptionHandlerTests {
         Result<Void> result = handler.handleBusinessException(
                 new BusinessException(CommonBusinessErrorCode.BUSINESS_ERROR));
 
-        assertThat(result.getCode()).isEqualTo(CommonBusinessErrorCode.BUSINESS_ERROR.getCode());
+        assertThat(result.getCode()).isEqualTo(9001001);
         assertThat(result.getMessage()).isEqualTo(CommonBusinessErrorCode.BUSINESS_ERROR.getMessage());
+    }
+
+    @Test
+    void shouldExposeFixedBuiltInCodesAcrossProjects() {
+        assertThat(CommonBusinessErrorCode.BUSINESS_ERROR.getCode()).isEqualTo(9001001);
+        assertThat(ValidationErrorCode.PARAM_VALIDATION_FAILED.getCode()).isEqualTo(9001101);
+        assertThat(ValidationErrorCode.REQUEST_PARAM_MISSING.getCode()).isEqualTo(9001102);
+        assertThat(ValidationErrorCode.REQUEST_PARAM_TYPE_MISMATCH.getCode()).isEqualTo(9001103);
+        assertThat(ValidationErrorCode.REQUEST_BODY_INVALID.getCode()).isEqualTo(9001104);
+        assertThat(SystemErrorCode.SYSTEM_ERROR.getCode()).isEqualTo(9001901);
     }
 
     @Test

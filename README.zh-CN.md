@@ -10,7 +10,7 @@
 <dependency>
     <groupId>com.roki</groupId>
     <artifactId>exception-spring-boot-starter</artifactId>
-    <version>2.0.0</version>
+    <version>2.0.1</version>
 </dependency>
 ```
 
@@ -46,8 +46,6 @@ roki:
         order: 11
         payment: 12
         common: 01
-        validation: 02
-        system: 99
 ```
 
 默认推荐写法是声明式枚举。如果后续要增加 `i18nKey`、`httpStatus`、`retryable` 这类元数据，它会更容易扩展。
@@ -77,6 +75,15 @@ public enum OrderErrorCode implements DeclarativeErrorCode {
 如果配置中 `project-code=10` 且 `biz-codes.order=11`，
 `OrderErrorCode.ORDER_NOT_FOUND.getCodeValue()` 会返回 `1011001`。
 `OrderErrorCode.ORDER_NOT_FOUND.getCode()` 会返回 `1011001`。
+
+starter 内置公共错误码为全局固定值，不依赖项目配置：
+
+- `CommonBusinessErrorCode.BUSINESS_ERROR` -> `9001001`
+- `ValidationErrorCode.PARAM_VALIDATION_FAILED` -> `9001101`
+- `ValidationErrorCode.REQUEST_PARAM_MISSING` -> `9001102`
+- `ValidationErrorCode.REQUEST_PARAM_TYPE_MISMATCH` -> `9001103`
+- `ValidationErrorCode.REQUEST_BODY_INVALID` -> `9001104`
+- `SystemErrorCode.SYSTEM_ERROR` -> `9001901`
 
 服务层直接使用：
 
@@ -118,6 +125,7 @@ return Result.success(data);
 
 - 每个项目必须配置唯一的 `project-code`
 - 每个业务域必须先在 `biz-codes` 中注册，再在代码里通过 `scopeName` 引用
+- starter 内置的公共、校验、系统兜底错误使用全局固定码，不需要额外配置 `biz-codes`
 - `detailCode` 固定为 3 位数字，并且应在同一个业务域内保持唯一
 - 默认推荐使用声明式枚举；如果更看重书写成本，可以使用常量类
 - 不建议在业务代码里直接写裸整数错误码

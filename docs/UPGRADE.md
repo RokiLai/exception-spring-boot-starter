@@ -64,7 +64,7 @@ This release refactors the starter around structured error codes, package layout
 
 ## Migration Checklist
 
-For downstream projects upgrading to `2.0.0`:
+For downstream projects upgrading to `2.0.1`:
 
 1. Add `roki.exception.error-code.project-code`
 2. Add `roki.exception.error-code.biz-codes`
@@ -80,6 +80,6 @@ Because this release changes the error code contract and package paths, it shoul
 
 Recommended version:
 
-- `2.0.0`
+- `2.0.1`
 
 Use a minor version only if you are certain there are no real downstream users depending on the previous layout and semantics.

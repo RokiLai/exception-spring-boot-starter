@@ -7,5 +7,3 @@ roki:
         order: 11
         payment: 12
         common: 01
-        validation: 02
-        system: 99

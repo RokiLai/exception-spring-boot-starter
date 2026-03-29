@@ -22,9 +22,7 @@ class ErrorCodeDefinitionValidatorTests {
         ErrorCodeScopes.configure("10", "01", Map.of(
                 "order", "11",
                 "payment", "12",
-                "common", "01",
-                "validation", "02",
-                "system", "99"));
+                "common", "01"));
     }
 
     @Test

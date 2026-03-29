@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.1] - 2026-03-29
+
+### Added
+- Introduced fixed global built-in public error codes so starter-level common errors stay identical across projects
+- Added the `FixedErrorCode` contract for global, configuration-independent error definitions
+
+### Changed
+- Converted built-in common, validation, and system fallback errors to fixed global codes
+- Documented fixed public codes in both English and Chinese README files
+- Adjusted tests to assert configuration-independent public error behavior
+
 ## [2.0.0] - 2026-03-29
 
 ### Added

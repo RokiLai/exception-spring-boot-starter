@@ -10,7 +10,7 @@ A reusable Spring Boot starter for unified API responses and global exception ha
 <dependency>
     <groupId>com.roki</groupId>
     <artifactId>exception-spring-boot-starter</artifactId>
-    <version>2.0.0</version>
+    <version>2.0.1</version>
 </dependency>
 ```
 
@@ -46,8 +46,6 @@ roki:
         order: 11
         payment: 12
         common: 01
-        validation: 02
-        system: 99
 ```
 
 Recommended style is a declarative enum. It is easier to evolve later if you add metadata such as `i18nKey`, `httpStatus`, or `retryable`.
@@ -77,6 +75,15 @@ public enum OrderErrorCode implements DeclarativeErrorCode {
 If `project-code=10` and `biz-codes.order=11`,
 `OrderErrorCode.ORDER_NOT_FOUND.getCodeValue()` returns `1011001`.
 `OrderErrorCode.ORDER_NOT_FOUND.getCode()` returns `1011001`.
+
+Built-in public errors are globally fixed and do not depend on project configuration:
+
+- `CommonBusinessErrorCode.BUSINESS_ERROR` -> `9001001`
+- `ValidationErrorCode.PARAM_VALIDATION_FAILED` -> `9001101`
+- `ValidationErrorCode.REQUEST_PARAM_MISSING` -> `9001102`
+- `ValidationErrorCode.REQUEST_PARAM_TYPE_MISMATCH` -> `9001103`
+- `ValidationErrorCode.REQUEST_BODY_INVALID` -> `9001104`
+- `SystemErrorCode.SYSTEM_ERROR` -> `9001901`
 
 Use it in your service:
 
@@ -118,6 +125,7 @@ Recommended constraints:
 
 - Each project should configure its own unique `project-code`
 - Each business domain should be registered in `biz-codes` before being referenced by `scopeName`
+- Built-in common, validation, and system fallback errors use fixed global codes and do not need `biz-codes` entries
 - `detailCode` must be 3 digits and should remain unique within the same business domain
 - Declarative enums are the default recommendation; constants classes remain a lighter alternative
 - Avoid hard-coded integer error codes in business code
