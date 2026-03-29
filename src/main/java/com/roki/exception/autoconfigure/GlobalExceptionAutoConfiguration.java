@@ -3,6 +3,7 @@ package com.roki.exception.autoconfigure;
 import com.roki.exception.code.validation.ErrorCodeDefinitionValidator;
 import com.roki.exception.code.scope.ErrorCodeScopes;
 import com.roki.exception.handler.GlobalExceptionHandler;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -43,13 +44,20 @@ public class GlobalExceptionAutoConfiguration {
         return new GlobalExceptionHandler();
     }
 
-    public static final class ErrorCodeScopeInitializer {
+    public static final class ErrorCodeScopeInitializer implements InitializingBean {
+
+        private final ErrorCodeProperties properties;
 
         /**
          * Initializes the runtime scope registry from external configuration.
          * 根据外部配置初始化运行时错误码 scope 注册表。
          */
         public ErrorCodeScopeInitializer(ErrorCodeProperties properties) {
+            this.properties = properties;
+        }
+
+        @Override
+        public void afterPropertiesSet() {
             ErrorCodeScopes.configure(
                     properties.getProjectCode(),
                     properties.getDefaultBizCode(),

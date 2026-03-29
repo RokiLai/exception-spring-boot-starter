@@ -34,6 +34,8 @@
 
 配置示例：
 
+下面这段配置应写在接入方业务项目的 `application.yml` 中：
+
 ```yaml
 roki:
   exception:

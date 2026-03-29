@@ -34,6 +34,8 @@ Recommended convention:
 
 Configuration example:
 
+Put the following configuration in the consuming application's `application.yml`:
+
 ```yaml
 roki:
   exception:

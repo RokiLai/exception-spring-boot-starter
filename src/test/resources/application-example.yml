@@ -1,0 +1,11 @@
+roki:
+  exception:
+    error-code:
+      project-code: 10
+      default-biz-code: 01
+      biz-codes:
+        order: 11
+        payment: 12
+        common: 01
+        validation: 02
+        system: 99
