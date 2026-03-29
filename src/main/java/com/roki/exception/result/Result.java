@@ -1,8 +1,11 @@
 package com.roki.exception.result;
 
-import lombok.Data;
+import com.roki.exception.api.ErrorCode;
 
-@Data
+/**
+ * Unified response wrapper returned by controllers and exception handlers.
+ * 控制器和异常处理器统一返回的响应包装对象。
+ */
 public class Result<T> {
 
     private Integer code;
@@ -39,5 +42,33 @@ public class Result<T> {
         result.setMessage(message);
         result.setData(null);
         return result;
+    }
+
+    public static <T> Result<T> fail(ErrorCode errorCode) {
+        return fail(errorCode.getCode(), errorCode.getMessage());
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
     }
 }
